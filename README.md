@@ -46,6 +46,10 @@ tasks/<id>/
 
 详见 Cursor Skill：`~/.cursor/skills/task-workspace/SKILL.md`
 
+## AI 验收
+
+Agent 按 [AI-TEST.md](AI-TEST.md) 逐步自测。
+
 ## 分发说明
 
 当前通过 GitHub 分发（不依赖 npm 2FA publish）。推送到 `xxin1438-lang/task-workspace` 即可更新。
