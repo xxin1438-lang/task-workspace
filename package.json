@@ -1,0 +1,36 @@
+{
+  "name": "genex-task-workspace",
+  "version": "1.0.0",
+  "description": "Cursor skill: create tasks/<ticket>/ docs skeleton from git branch (process/review/handoff)",
+  "keywords": [
+    "cursor",
+    "skill",
+    "task",
+    "handoff",
+    "prd",
+    "git",
+    "developer-tools"
+  ],
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "bin": {
+    "task-workspace": "bin/task-workspace.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "skill",
+    "commands",
+    "setup.sh",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
