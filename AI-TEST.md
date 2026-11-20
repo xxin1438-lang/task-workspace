@@ -34,12 +34,12 @@ npx github:xxin1438-lang/task-workspace init --id ai-test-1
 - 存在目录树：
 
 ```text
-tasks/ai-test-1/process/grillme|prd|tech/{frontend,backend,api}/
+tasks/ai-test-1/process/grillme|prd|tech/{frontend,backend,api,deploy/sql}/
 tasks/ai-test-1/review/
 tasks/ai-test-1/handoff/{docs,test-cases}/
 ```
 
-每个叶子目录有 `README.md`。
+每个叶子目录有 `README.md`；`process/tech/deploy/deploy.md` 应由模板生成。
 
 校验：
 
@@ -47,7 +47,7 @@ tasks/ai-test-1/handoff/{docs,test-cases}/
 find tasks/ai-test-1 -type f | sort
 ```
 
-期望：恰好 8 个 `README.md`（或至少这 8 个路径都在）。
+期望：至少 10 个 `README.md`（含 `deploy/` 与 `deploy/sql/`），且存在 `process/tech/deploy/deploy.md`。
 
 ### 3. --check 应报关键正文缺失
 
@@ -59,17 +59,18 @@ echo exit:$?
 期望：
 
 - 目录项均为 `[ok]`
-- 关键文件（`clarify.md` / `prd.md` / `design.md` / `api.md` / `handoff.md` / `cases.md`）为 `[MISSING]`
-- exit code ≠ 0
+- 关键文件（`clarify.md` / `prd.md` / `design.md` / `api.md` / `deploy.md` / `handoff.md` / `cases.md`）中：若 `deploy.md` 已由模板生成则为 `[ok]`，其余正文可为 `[MISSING]`
+- 若仅缺正文、目录齐全：exit code ≠ 0（除非只缺已模板化的 deploy.md 外的项）
 
-### 4. 落盘映射冒烟（写一篇假 PRD）
+### 4. 落盘映射冒烟（写一篇假 PRD + 部署）
 
 ```bash
 printf '%s\n' '# 测试 PRD' '' '仅用于 AI 验收。' > tasks/ai-test-1/process/prd/prd.md
+printf '%s\n' '# 部署' '' '## 1. 待部署服务' '' '| 服务 | 是否需发版 | 本次新增 / 变更能力（一句话） |' > tasks/ai-test-1/process/tech/deploy/deploy.md
 npx github:xxin1438-lang/task-workspace check --id ai-test-1
 ```
 
-期望：`process/prd/prd.md` 变为 `[ok]`，其余关键文件仍可 `[MISSING]`。
+期望：`prd.md` 与 `deploy.md` 为 `[ok]`，其余关键文件仍可 `[MISSING]`。
 
 ### 5. 分支解析（可选）
 

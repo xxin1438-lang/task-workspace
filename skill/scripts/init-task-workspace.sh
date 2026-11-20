@@ -20,6 +20,8 @@ LEAF_DIRS=(
   "process/tech/frontend"
   "process/tech/backend"
   "process/tech/api"
+  "process/tech/deploy"
+  "process/tech/deploy/sql"
   "review"
   "handoff/docs"
   "handoff/test-cases"
@@ -32,6 +34,7 @@ KEY_FILES=(
   "process/tech/frontend/design.md"
   "process/tech/backend/design.md"
   "process/tech/api/api.md"
+  "process/tech/deploy/deploy.md"
   "handoff/docs/handoff.md"
   "handoff/test-cases/cases.md"
 )
@@ -103,6 +106,12 @@ ensure_skeleton() {
       fi
     fi
   done
+  # 部署主文档：有模板则拷为 deploy.md（不覆盖已有）
+  dest="$task_root/process/tech/deploy/deploy.md"
+  template="$TEMPLATES_DIR/process/tech/deploy/deploy.md.template"
+  if [[ ! -f "$dest" && -f "$template" ]]; then
+    cp "$template" "$dest"
+  fi
 }
 
 is_readme_only_or_missing() {
