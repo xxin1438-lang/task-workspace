@@ -11,6 +11,7 @@ TEMPLATES_DIR="$SKILL_ROOT/templates"
 HOOK_MODE=0
 CHECK_MODE=0
 SELF_TEST=0
+NO_SYNC=0
 TASK_ID=""
 ROOT_OVERRIDE=""
 
@@ -41,14 +42,42 @@ KEY_FILES=(
 
 usage() {
   cat <<'EOF'
-Usage: init-task-workspace.sh [--id TASK_ID] [--root PATH] [--check] [--hook] [--self-test]
+Usage: init-task-workspace.sh [--id TASK_ID] [--root PATH] [--check] [--hook] [--no-sync] [--self-test]
 
   --id        手动指定工单号（小写规范化）
   --root      指定 monorepo 顶层（默认自动探测）
   --check     校验骨架与关键文件，不创建
   --hook      Git hook 模式：出错也 exit 0
+  --no-sync   跳过 fetch / pull（默认会同步远程，避免本地空骨架盖住远程 tasks/）
   --self-test 跑内置断言后退出
 EOF
+}
+
+# 建骨架前同步远程：先拿到远程已有的 tasks/<id>/，再幂等补缺
+sync_from_remote() {
+  if [[ "$NO_SYNC" -eq 1 ]]; then
+    return 0
+  fi
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    return 0
+  fi
+  printf 'task-workspace: git fetch...\n' >&2
+  if ! git fetch --prune 2>/dev/null; then
+    log_err "task-workspace: fetch 失败（继续本地建骨架；建议先恢复网络后再切分支）"
+    return 0
+  fi
+  local upstream
+  upstream="$(git rev-parse --abbrev-ref '@{upstream}' 2>/dev/null || true)"
+  if [[ -z "$upstream" ]]; then
+    printf 'task-workspace: 无上游分支，跳过 pull\n' >&2
+    return 0
+  fi
+  printf 'task-workspace: git pull --ff-only (%s)...\n' "$upstream" >&2
+  if ! git pull --ff-only 2>/dev/null; then
+    log_err "task-workspace: pull --ff-only 未成功（可能有本地提交/冲突）。未强行改写工作区；请先处理后再 init，以免与远程 tasks/ 冲突。"
+    # hook 模式不阻断；手动模式仍继续补骨架但不覆盖已有文件
+    return 0
+  fi
 }
 
 log_err() { printf '%s\n' "$*" >&2; }
@@ -221,6 +250,10 @@ while [[ $# -gt 0 ]]; do
       HOOK_MODE=1
       shift
       ;;
+    --no-sync)
+      NO_SYNC=1
+      shift
+      ;;
     --self-test)
       SELF_TEST=1
       shift
@@ -272,6 +305,11 @@ if [[ "$CHECK_MODE" -eq 1 ]]; then
   finish $?
 fi
 
+# 先同步远程，再补骨架（绝不覆盖已有文件）
+(
+  cd "$root" || exit 0
+  sync_from_remote
+)
 ensure_skeleton "$task_root"
 printf 'task-workspace ready: %s\n' "$task_root"
 finish 0

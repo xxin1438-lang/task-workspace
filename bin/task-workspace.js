@@ -16,14 +16,16 @@ task-workspace — 按 Git 分支工单号维护 tasks/<id>/ 文档骨架（Curs
 用法:
   task-workspace install              安装到 ~/.cursor/skills 与 ~/.cursor/commands
   task-workspace install-project [p]  安装到项目 .cursor/skills（默认 cwd）
-  task-workspace init [--id ID]       调用脚本建/补骨架
+  task-workspace checkout -- <git checkout 参数...>
+                                      先 fetch → checkout → pull --ff-only → init（门禁）
+  task-workspace init [--id ID]       建/补骨架（默认先 fetch/pull）
   task-workspace check [--id ID]      校验齐套
   task-workspace install-hooks        安装 git post-checkout/post-merge
   task-workspace help                 显示帮助
 
 示例:
   npx github:xxin1438-lang/task-workspace install
-  npx github:xxin1438-lang/task-workspace install-project
+  npx github:xxin1438-lang/task-workspace checkout -- -b test/AIDN-17-docs origin/test/AIDN-17
   npx github:xxin1438-lang/task-workspace init --id aidn-17
 
 环境变量:
@@ -87,6 +89,20 @@ switch (command) {
   case 'install-project': {
     const { skillDest } = installProject(args[0] || process.cwd());
     console.log(`==> 已安装到项目: ${skillDest}`);
+    break;
+  }
+  case 'checkout': {
+    // 支持: checkout -- -b foo origin/foo  或  checkout -b foo origin/foo
+    const checkoutArgs = args[0] === '--' ? args.slice(1) : args;
+    const init = resolveInitScript(true);
+    const script = join(dirname(init), 'checkout-safe.sh');
+    if (!existsSync(script)) {
+      console.error(`找不到脚本: ${script}`);
+      console.error('请先执行: npx github:xxin1438-lang/task-workspace install');
+      process.exit(1);
+    }
+    const r = spawnSync(script, checkoutArgs, { stdio: 'inherit' });
+    process.exit(r.status ?? 1);
     break;
   }
   case 'init': {

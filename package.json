@@ -1,6 +1,6 @@
 {
   "name": "genex-task-workspace",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Cursor skill: create tasks/<ticket>/ docs skeleton from git branch (process/review/handoff/deploy)",
   "keywords": [
     "cursor",

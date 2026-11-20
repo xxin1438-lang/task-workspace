@@ -9,7 +9,7 @@ if [[ $# -eq 0 ]]; then
 fi
 
 case "${1:-}" in
-  install|install-project|init|check|install-hooks|help|-h|--help)
+  install|install-project|checkout|init|check|install-hooks|help|-h|--help)
     exec "${CLI[@]}" "$@"
     ;;
   *)
