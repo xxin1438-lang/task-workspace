@@ -41,7 +41,13 @@ npx github:xxin1438-lang/task-workspace check --id aidn-17
 npx github:xxin1438-lang/task-workspace install-hooks
 ```
 
-个人路径：`~/.cursor/skills/task-workspace/scripts/`。
+个人路径（任选其一）：
+
+- `~/.cursor/skills/task-workspace/scripts/`（Cursor）
+- `~/.claude/skills/task-workspace/scripts/`（Claude Code）
+- `~/.agents/skills/task-workspace/scripts/`（Agents）
+
+`npx ... install` 会同时写入以上三端。
 
 ## 何时使用
 

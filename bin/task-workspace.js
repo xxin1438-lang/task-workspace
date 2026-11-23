@@ -11,11 +11,12 @@ const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 function printHelp() {
   console.log(`
-task-workspace — 按 Git 分支工单号维护 tasks/<id>/ 文档骨架（Cursor Skill）
+task-workspace — 按 Git 分支工单号维护 tasks/<id>/ 文档骨架
+支持：Cursor / Claude Code / Agents（.cursor · .claude · .agents）
 
 用法:
-  task-workspace install              安装到 ~/.cursor/skills 与 ~/.cursor/commands
-  task-workspace install-project [p]  安装到项目 .cursor/skills（默认 cwd）
+  task-workspace install              安装到 ~/.cursor、~/.claude、~/.agents
+  task-workspace install-project [p]  安装到项目 .cursor/.claude/.agents/skills
   task-workspace checkout -- <git checkout 参数...>
                                       先 fetch → checkout → pull --ff-only → init（门禁）
   task-workspace init [--id ID]       建/补骨架（默认先 fetch/pull）
@@ -29,32 +30,42 @@ task-workspace — 按 Git 分支工单号维护 tasks/<id>/ 文档骨架（Curs
   npx github:xxin1438-lang/task-workspace init --id aidn-17
 
 环境变量:
-  CURSOR_HOME   Cursor 配置目录（默认 ~/.cursor）
+  CURSOR_HOME   默认 ~/.cursor
+  CLAUDE_HOME   默认 ~/.claude
+  AGENTS_HOME   默认 ~/.agents
 `);
 }
 
 function resolveInitScript(preferProject) {
-  const homeSkill = join(
+  const candidates = [];
+  if (preferProject) {
+    candidates.push(
+      join(process.cwd(), '.cursor', 'skills', 'task-workspace', 'scripts', 'init-task-workspace.sh'),
+      join(process.cwd(), '.claude', 'skills', 'task-workspace', 'scripts', 'init-task-workspace.sh'),
+      join(process.cwd(), '.agents', 'skills', 'task-workspace', 'scripts', 'init-task-workspace.sh')
+    );
+  }
+  const homes = [
     process.env.CURSOR_HOME || join(homedir(), '.cursor'),
-    'skills',
-    'task-workspace',
-    'scripts',
-    'init-task-workspace.sh'
-  );
-  const pkgSkill = join(packageRoot, 'skill', 'scripts', 'init-task-workspace.sh');
-  const projectSkill = join(
-    process.cwd(),
-    '.cursor',
-    'skills',
-    'task-workspace',
-    'scripts',
-    'init-task-workspace.sh'
-  );
+    process.env.CLAUDE_HOME || join(homedir(), '.claude'),
+    process.env.AGENTS_HOME || join(homedir(), '.agents'),
+  ];
+  for (const home of homes) {
+    candidates.push(join(home, 'skills', 'task-workspace', 'scripts', 'init-task-workspace.sh'));
+  }
+  if (!preferProject) {
+    candidates.push(
+      join(process.cwd(), '.cursor', 'skills', 'task-workspace', 'scripts', 'init-task-workspace.sh'),
+      join(process.cwd(), '.claude', 'skills', 'task-workspace', 'scripts', 'init-task-workspace.sh'),
+      join(process.cwd(), '.agents', 'skills', 'task-workspace', 'scripts', 'init-task-workspace.sh')
+    );
+  }
+  candidates.push(join(packageRoot, 'skill', 'scripts', 'init-task-workspace.sh'));
 
-  if (preferProject && existsSync(projectSkill)) return projectSkill;
-  if (existsSync(homeSkill)) return homeSkill;
-  if (existsSync(projectSkill)) return projectSkill;
-  return pkgSkill;
+  for (const p of candidates) {
+    if (existsSync(p)) return p;
+  }
+  return candidates[candidates.length - 1];
 }
 
 function runScript(scriptName, args) {
@@ -76,23 +87,26 @@ const [, , command, ...args] = process.argv;
 
 switch (command) {
   case 'install': {
-    const { skillDest, commandsDest } = installSkill();
-    console.log('==> 安装 task-workspace 到 Cursor');
-    console.log(`    Skill    -> ${skillDest}`);
-    console.log(`    Commands -> ${commandsDest}`);
+    const { destinations } = installSkill();
+    console.log('==> 安装 task-workspace（多端）');
+    for (const d of destinations) {
+      console.log(`    [${d.id}] Skill -> ${d.skillDest}`);
+      if (d.commandsDest) console.log(`    [${d.id}] Commands -> ${d.commandsDest}`);
+    }
     console.log('==> 安装完成');
     console.log('');
-    console.log('下一步：在 monorepo 根执行 /init-task 或:');
-    console.log('  npx github:xxin1438-lang/task-workspace init --id aidn-17');
+    console.log('下一步: npx github:xxin1438-lang/task-workspace init --id aidn-17');
     break;
   }
   case 'install-project': {
-    const { skillDest } = installProject(args[0] || process.cwd());
-    console.log(`==> 已安装到项目: ${skillDest}`);
+    const { destinations } = installProject(args[0] || process.cwd());
+    console.log('==> 已安装到项目:');
+    for (const d of destinations) {
+      console.log(`    ${d.skillDest}`);
+    }
     break;
   }
   case 'checkout': {
-    // 支持: checkout -- -b foo origin/foo  或  checkout -b foo origin/foo
     const checkoutArgs = args[0] === '--' ? args.slice(1) : args;
     const init = resolveInitScript(true);
     const script = join(dirname(init), 'checkout-safe.sh');
