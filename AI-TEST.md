@@ -36,7 +36,7 @@ npx github:xxin1438-lang/task-workspace init --id ai-test-1
 ```text
 tasks/ai-test-1/process/grillme|prd|tech/{frontend,backend,api,deploy/sql}/
 tasks/ai-test-1/review/
-tasks/ai-test-1/handoff/{docs,test-cases}/
+tasks/ai-test-1/handoff/{docs,test-cases/results}/
 ```
 
 每个叶子目录有 `README.md`；`process/tech/deploy/deploy.md` 应由模板生成。

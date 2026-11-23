@@ -26,6 +26,7 @@ LEAF_DIRS=(
   "review"
   "handoff/docs"
   "handoff/test-cases"
+  "handoff/test-cases/results"
 )
 
 # 关键正文文件（相对 task 根）；校验用
@@ -141,6 +142,7 @@ ensure_skeleton() {
   if [[ ! -f "$dest" && -f "$template" ]]; then
     cp "$template" "$dest"
   fi
+  # 测试结果不强制预置正文；仅保证 results/ 目录存在（见 LEAF_DIRS）
 }
 
 is_readme_only_or_missing() {

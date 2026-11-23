@@ -2,9 +2,9 @@
 name: task-workspace
 description: >-
   按当前 Git 分支工单号在 monorepo 顶层维护 tasks/<id>/ 文档骨架（process/review/handoff），
-  并约定 GrillMe、PRD、前后端与接口文档、部署（SQL/配置/服务清单）、评审、交接、测试用例的落盘路径与齐套校验。
+  并约定 GrillMe、PRD、前后端与接口文档、部署（SQL/配置/服务清单）、评审、交接、测试用例与测试结果的落盘路径与齐套校验。
   切分支前必须先 fetch/pull，避免远程已有 tasks/<id>/ 时本地空骨架冲突。
-  在用户拉取/切换带工单号分支、说 init task / 建 task 目录、生成或校验需求/部署文档时使用。
+  在用户拉取/切换带工单号分支、说 init task / 建 task 目录、生成或校验需求/部署/测试结果文档时使用。
 ---
 
 # Task Workspace
@@ -46,7 +46,7 @@ npx github:xxin1438-lang/task-workspace install-hooks
 ## 何时使用
 
 1. 用户说「切到 origin/feature/xxx」「init task」「建 task 目录」
-2. 即将生成 GrillMe / PRD / 技术方案 / 部署说明 / 评审 / 交接 / 用例
+2. 即将生成 GrillMe / PRD / 技术方案 / 部署说明 / 评审 / 交接 / 用例 / **测试结果**
 3. 用户说「校验 task」
 
 ## 工作流
@@ -62,7 +62,7 @@ npx github:xxin1438-lang/task-workspace install-hooks
 tasks/<id>/
 ├── process/grillme|prd|tech/{frontend,backend,api,deploy/sql}/
 ├── review/
-└── handoff/{docs,test-cases}/
+└── handoff/{docs,test-cases/results}/
 ```
 
 ## 落盘映射
@@ -79,9 +79,11 @@ tasks/<id>/
 | 评审 | `review/review-YYYY-MM-DD.md` |
 | 交接 | `handoff/docs/handoff.md` |
 | 用例 | `handoff/test-cases/cases.md` |
+| 测试结果 | `handoff/test-cases/results/result-YYYY-MM-DD.md` |
 
 `handoff.md`：背景、目标、非目标、如何验收、相关文档链接。  
-`deploy.md`：待部署服务、功能见解、配置参数、SQL 顺序。
+`deploy.md`：待部署服务、功能见解、配置参数、SQL 顺序。  
+测试结果**不**作为 `--check` 必过项（跑测后才写）；模板见 `templates/.../results/result.md.template`。
 
 ## 边界
 
