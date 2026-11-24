@@ -1,7 +1,7 @@
 # api
 
-本目录存放接口文档（OpenAPI / 契约 / 接口变更说明）。
+本目录只放指向接口契约的链接，不写契约正文。
 
-建议文件名：`api.md` 或 `openapi.yaml`
+文件：`api.md`（init 会生成链接草稿）。
 
-不要把：前后端实现细节长文、PRD 放到这里。
+正文路径：`genex-ai-native-harness/openspec/changes/<工单号>-<简述>/design.md`

@@ -47,7 +47,7 @@ tasks/<id>/
 └── handoff/{docs,test-cases/results}/
 ```
 
-详见：`~/.cursor/skills/task-workspace/SKILL.md`（Claude / Agents 路径同理）。
+`process/tech/{frontend,backend,api}/` 里的 `design.md` / `api.md` 只放链接，不写设计正文。详见：`skill/SKILL.md`。
 
 ## AI 验收
 

@@ -1,7 +1,7 @@
 # frontend
 
-本目录存放前端技术设计 / 实现说明。
+本目录只放指向前端设计正文的链接，不写设计正文。
 
-建议文件名：`design.md`
+文件：`design.md`（init 会生成链接草稿）。
 
-不要把：后端设计、OpenAPI 契约、PRD 放到这里。
+正文路径：`genex-ai-native-harness/genex-harness-frontend/changes/<工单号>-<简述>.md`

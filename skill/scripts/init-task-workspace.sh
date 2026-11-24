@@ -120,6 +120,15 @@ normalize_id() {
   printf '%s' "$1" | tr '[:upper:]' '[:lower:]'
 }
 
+write_link_stub() {
+  local dest="$1"
+  local template="$2"
+  if [[ -f "$dest" || ! -f "$template" ]]; then
+    return 0
+  fi
+  sed "s/{{TASK_ID}}/${TASK_ID}/g" "$template" >"$dest"
+}
+
 ensure_skeleton() {
   local task_root="$1"
   local rel template dest
@@ -142,6 +151,13 @@ ensure_skeleton() {
   if [[ ! -f "$dest" && -f "$template" ]]; then
     cp "$template" "$dest"
   fi
+  # 设计与接口只生成链接草稿，不写正文（不覆盖已有）
+  write_link_stub "$task_root/process/tech/frontend/design.md" \
+    "$TEMPLATES_DIR/process/tech/frontend/design.md.template"
+  write_link_stub "$task_root/process/tech/backend/design.md" \
+    "$TEMPLATES_DIR/process/tech/backend/design.md.template"
+  write_link_stub "$task_root/process/tech/api/api.md" \
+    "$TEMPLATES_DIR/process/tech/api/api.md.template"
   # 测试结果不强制预置正文；仅保证 results/ 目录存在（见 LEAF_DIRS）
 }
 
