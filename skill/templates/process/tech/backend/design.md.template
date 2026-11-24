@@ -1,0 +1,7 @@
+# 后端设计
+
+正文不写在本文件。写到：
+
+`genex-ai-native-harness/genex-harness-backend/changes/{{TASK_ID}}-<简述>.md`
+
+`<简述>` 与本次 OpenSpec 目录名相同。本文件只保留该链接。

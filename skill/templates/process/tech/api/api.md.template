@@ -1,0 +1,7 @@
+# 接口
+
+契约不写在本文件。写到该变更 OpenSpec 的 `design.md`：
+
+`genex-ai-native-harness/openspec/changes/{{TASK_ID}}-<简述>/design.md`
+
+本文件只保留该链接。
