@@ -201,9 +201,13 @@ run_check() {
   done
 
   path="$task_root/process/stack-routing.md"
-  printf '\n## 语言路由（缺则 warn，不阻断旧工单）\n'
+  printf '\n## 语言路由（阶段 0 强制）\n'
   if is_readme_only_or_missing "$path"; then
-    printf '[warn] process/stack-routing.md 缺失；新工单阶段 0 应填写（见 delivery-pipeline §2.1）\n'
+    printf '[MISSING] process/stack-routing.md\n'
+    missing=1
+  elif ! grep -E '^\|[^|]+\|[^|]+\|\s*是\s*\|' "$path" >/dev/null 2>&1; then
+    printf '[MISSING] process/stack-routing.md 无「是否本工单改动=是」行\n'
+    missing=1
   else
     printf '[ok] process/stack-routing.md\n'
   fi
