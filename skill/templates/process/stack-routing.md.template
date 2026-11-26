@@ -1,0 +1,16 @@
+# 语言 / 项目路由 — {{TASK_ID}}
+
+> 阶段 0 填写。真源约定见 `genex-harness-common/rules/delivery-pipeline.md` §2.1。  
+> 语言不明先问用户；跨语言可多行。
+
+| 语言 / 栈 | 项目根（仓库相对路径） | 是否本工单改动 | 备注 |
+|-----------|------------------------|----------------|------|
+| React | `web/genex-frontend` | 否 | |
+| Vue | `web/genex-admin-web` | 否 | |
+| Node | `node/<service>` | 否 | 填具体服务名 |
+| Java | `java/` | 否 | |
+| 视觉 / design | `genex-ai-native-harness/genex-harness-design/` | 否 | |
+
+- OpenSpec change 名（若有）：`<工单号>-<简述>`
+- 受保护写码路径（并集，阶段 4 gate 用）：
+  - （例：`web/genex-frontend/apps/web/src/features/...`）

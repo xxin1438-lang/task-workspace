@@ -158,6 +158,9 @@ ensure_skeleton() {
     "$TEMPLATES_DIR/process/tech/backend/design.md.template"
   write_link_stub "$task_root/process/tech/api/api.md" \
     "$TEMPLATES_DIR/process/tech/api/api.md.template"
+  # 语言路由（阶段 0）；不覆盖已有
+  write_link_stub "$task_root/process/stack-routing.md" \
+    "$TEMPLATES_DIR/process/stack-routing.md.template"
   # 测试结果不强制预置正文；仅保证 results/ 目录存在（见 LEAF_DIRS）
 }
 
@@ -196,6 +199,14 @@ run_check() {
       printf '[ok] %s\n' "$rel"
     fi
   done
+
+  path="$task_root/process/stack-routing.md"
+  printf '\n## 语言路由（缺则 warn，不阻断旧工单）\n'
+  if is_readme_only_or_missing "$path"; then
+    printf '[warn] process/stack-routing.md 缺失；新工单阶段 0 应填写（见 delivery-pipeline §2.1）\n'
+  else
+    printf '[ok] process/stack-routing.md\n'
+  fi
 
   local handoff="$task_root/handoff/docs/handoff.md"
   printf '\n## handoff.md 最小章节\n'

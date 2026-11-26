@@ -66,6 +66,7 @@ npx github:xxin1438-lang/task-workspace install-hooks
 
 ```
 tasks/<id>/
+├── process/stack-routing.md
 ├── process/grillme|prd|tech/{frontend,backend,api,deploy/sql}/
 ├── review/
 └── handoff/{docs,test-cases/results}/
@@ -75,6 +76,7 @@ tasks/<id>/
 
 | 产物 | 路径 |
 |------|------|
+| 语言/项目路由 | `process/stack-routing.md`（阶段 0；见 delivery-pipeline §2.1） |
 | GrillMe | `process/grillme/clarify.md` |
 | PRD | `process/prd/prd.md` |
 | 前端设计链接 | `process/tech/frontend/design.md` |
