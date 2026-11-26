@@ -1,16 +1,18 @@
 # 语言 / 项目路由 — {{TASK_ID}}
 
 > 阶段 0 填写。真源约定见 `genex-harness-common/rules/delivery-pipeline.md` §2.1。  
-> 语言不明先问用户；跨语言可多行。
+> 语言不明先问用户；跨语言可多行。命中「是」后打开对应语言适配卡：  
+> `genex-harness-frontend/docs/ai-native/languages/<lang>.md`（澄清必问 / 自检 / 验证矩阵 / 报告字段）。
 
-| 语言 / 栈 | 项目根（仓库相对路径） | 是否本工单改动 | 备注 |
-|-----------|------------------------|----------------|------|
-| React | `web/genex-frontend` | 否 | |
-| Vue | `web/genex-admin-web` | 否 | |
-| Node | `node/<service>` | 否 | 填具体服务名 |
-| Java | `java/` | 否 | |
-| 视觉 / design | `genex-ai-native-harness/genex-harness-design/` | 否 | |
+| 语言 / 栈 | 项目根（仓库相对路径） | 是否本工单改动 | 适配卡 | 备注 |
+|-----------|------------------------|----------------|--------|------|
+| React | `web/genex-frontend` | 否 | `languages/react.md` | |
+| Vue | `web/genex-admin-web` | 否 | `languages/vue.md` | |
+| Node | `node/<service>` | 否 | `languages/node.md` | 填具体服务名 |
+| Java | `java/` | 否 | `languages/java.md` | |
+| 视觉 / design | `genex-ai-native-harness/genex-harness-design/` | 否 | — | |
 
-- OpenSpec change 名（若有）：`<工单号>-<简述>`
+- OpenSpec 主 change 名（若有）：`<工单号>-<简述>`
+- 其余 change（若有）：列 kebab 名；过程稿落 `process/tech/<role>/<lang>/<change>/`（见 delivery-pipeline §2.2）
 - 受保护写码路径（并集，阶段 4 gate 用）：
   - （例：`web/genex-frontend/apps/web/src/features/...`）
