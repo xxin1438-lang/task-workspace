@@ -2,7 +2,8 @@
 
 本目录存放**测试执行结果**（相对 `cases.md` 用例的跑测记录）。
 
-建议文件名：`result-YYYY-MM-DD.md`（可加轮次后缀，如 `result-2026-11-23-round2.md`）。
+**必须**使用 `result-*.md`（例：`result-2026-11-27.md` / `result-aidn-310-2026-11-27.md`）。  
+仅有本 `README.md` **不会**把流程推到 Step 6（flow-contract 信号已排除）。
 
 建议最小章节：
 

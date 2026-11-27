@@ -79,25 +79,23 @@ tasks/<id>/
 | 语言/项目路由 | `process/stack-routing.md`（阶段 0；见 delivery-pipeline §2.1） |
 | GrillMe | `process/grillme/clarify.md` |
 | PRD | `process/prd/prd.md` |
-| 前端设计链接 | `process/tech/frontend/design.md` |
-| 后端设计链接 | `process/tech/backend/design.md` |
-| 接口链接 | `process/tech/api/api.md` |
+| 前端设计 | `process/tech/frontend/<lang>/design.md` + `tasks.md` |
+| 后端设计 | `process/tech/backend/<lang>/design.md` + `tasks.md` |
+| 接口 | `process/tech/api/<lang>/`（及 staging 重组正文） |
+| harness 流程 | `process/tech/harness/common/design.md` + `tasks.md` |
 | 部署说明 | `process/tech/deploy/deploy.md` |
 | 部署 SQL | `process/tech/deploy/sql/*.sql` |
 | 评审 | `review/review-YYYY-MM-DD.md` |
 | 交接 | `handoff/docs/handoff.md` |
 | 用例 | `handoff/test-cases/cases.md` |
-| 测试结果 | `handoff/test-cases/results/result-YYYY-MM-DD.md` |
+| 测试结果 | `handoff/test-cases/results/result-*.md` |
 
-`frontend/design.md`、`backend/design.md`、`api/api.md` 只放链接，不写设计或契约正文。正文分别在：
-
-- `genex-ai-native-harness/genex-harness-frontend/changes/<工单号>-<简述>.md`
-- `genex-ai-native-harness/genex-harness-backend/changes/<工单号>-<简述>.md`
-- `genex-ai-native-harness/openspec/changes/<工单号>-<简述>/design.md`
+**门禁真源**是 `process/tech/<role>/<lang>/`（见 monorepo `delivery-pipeline.md` §2.1）。  
+init **不**在角色根生成 `design.md`（避免假 Step3）。`harness-*/changes/` 仅可选归档。
 
 `handoff.md`：背景、目标、非目标、如何验收、相关文档链接。  
 `deploy.md`：待部署服务、功能见解、配置参数、SQL 顺序。  
-测试结果**不**作为 `--check` 必过项（跑测后才写）；模板见 `templates/.../results/result.md.template`。
+测试结果**不**作为 `--check` 必过项（跑测后才写）；须用 `result-*.md` 文件名（勿只靠 README）。
 
 ## 边界
 

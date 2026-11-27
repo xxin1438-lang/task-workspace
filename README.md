@@ -47,7 +47,7 @@ tasks/<id>/
 └── handoff/{docs,test-cases/results}/
 ```
 
-`process/tech/{frontend,backend,api}/` 里的 `design.md` / `api.md` 只放链接，不写设计正文。详见：`skill/SKILL.md`。
+设计真源在 `process/tech/<role>/<lang>/design.md`（init 不预建 lang 层）。详见：`skill/SKILL.md` 与 monorepo `delivery-pipeline.md` §2.1。
 
 ## AI 验收
 

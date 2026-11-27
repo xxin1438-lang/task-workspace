@@ -1,7 +1,8 @@
-# 后端设计
+# 后端设计（占位 · 勿当门禁真源）
 
-正文不写在本文件。写到：
+> **门禁真源**在 `process/tech/backend/<lang>/design.md`（及同目录 `tasks.md`）。  
+> `<lang>` 例：`java`。init **不再**在本路径写设计正文；Agent 在 Step 3 `mkdir` 语言目录后写正文。  
+> `genex-harness-backend/changes/` 仅可选归档，不得代替本工单 tasks 真源。  
+> 约定：`genex-harness-common/rules/delivery-pipeline.md` §2.1。
 
-`genex-ai-native-harness/genex-harness-backend/changes/{{TASK_ID}}-<简述>.md`
-
-`<简述>` 与本次 OpenSpec 目录名相同。本文件只保留该链接。
+本文件可删；保留时只作导航，禁止「正文写到 harness/changes」的旧口径。

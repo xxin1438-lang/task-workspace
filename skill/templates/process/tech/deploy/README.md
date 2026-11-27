@@ -1,10 +1,5 @@
 # deploy
 
-本目录存放**部署说明**：要部署哪些服务、各服务本次新增能力简介、配置参数变更，以及相关 SQL。
+部署说明：`deploy.md`；SQL：`sql/`。
 
-建议文件：
-
-- `deploy.md` — 主部署文档（服务清单 / 功能见解 / 配置参数）
-- `sql/` — 待执行的 DDL/DML 脚本（`*.sql`）
-
-不要把产品 PRD 或前后端设计正文放到这里。设计正文在 harness 的 `changes/` 文件里，`frontend/`、`backend/`、`api/` 只放链接。
+产品 PRD、前后端设计正文分别在 `process/prd/` 与 `process/tech/<role>/<lang>/`，不要写到这里。

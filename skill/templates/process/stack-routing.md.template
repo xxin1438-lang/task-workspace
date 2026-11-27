@@ -10,6 +10,7 @@
 | Vue | `web/genex-admin-web` | 否 | `languages/vue.md` | |
 | Node | `node/<service>` | 否 | `languages/node.md` | 填具体服务名 |
 | Java | `java/` | 否 | `languages/java.md` | |
+| harness / 流程 | `genex-ai-native-harness/` | 否 | — | 改 common/rules、hooks、.githooks 时标「是」；设计落 `process/tech/harness/common/` |
 | 视觉 / design | `genex-ai-native-harness/genex-harness-design/` | 否 | — | |
 
 - OpenSpec 主 change 名（若有）：`<工单号>-<简述>`

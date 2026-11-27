@@ -29,13 +29,12 @@ LEAF_DIRS=(
   "handoff/test-cases/results"
 )
 
-# 关键正文文件（相对 task 根）；校验用
+# 关键正文（相对 task 根）；校验用。
+# 设计/契约真源在 process/tech/<role>/<lang>/，init 不预建，故不列入 KEY_FILES。
 KEY_FILES=(
+  "process/stack-routing.md"
   "process/grillme/clarify.md"
   "process/prd/prd.md"
-  "process/tech/frontend/design.md"
-  "process/tech/backend/design.md"
-  "process/tech/api/api.md"
   "process/tech/deploy/deploy.md"
   "handoff/docs/handoff.md"
   "handoff/test-cases/cases.md"
@@ -151,16 +150,11 @@ ensure_skeleton() {
   if [[ ! -f "$dest" && -f "$template" ]]; then
     cp "$template" "$dest"
   fi
-  # 设计与接口只生成链接草稿，不写正文（不覆盖已有）
-  write_link_stub "$task_root/process/tech/frontend/design.md" \
-    "$TEMPLATES_DIR/process/tech/frontend/design.md.template"
-  write_link_stub "$task_root/process/tech/backend/design.md" \
-    "$TEMPLATES_DIR/process/tech/backend/design.md.template"
-  write_link_stub "$task_root/process/tech/api/api.md" \
-    "$TEMPLATES_DIR/process/tech/api/api.md.template"
   # 语言路由（阶段 0）；不覆盖已有
   write_link_stub "$task_root/process/stack-routing.md" \
     "$TEMPLATES_DIR/process/stack-routing.md.template"
+  # 设计/契约：不在角色根生成 design.md（会误触发 Step3 信号）。
+  # Step3 按 stack-routing mkdir process/tech/<role>/<lang>/ 再写 design.md+tasks.md。
   # 测试结果不强制预置正文；仅保证 results/ 目录存在（见 LEAF_DIRS）
 }
 

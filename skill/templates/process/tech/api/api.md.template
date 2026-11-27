@@ -1,7 +1,7 @@
-# 接口
+# 接口（占位 · 勿当门禁真源）
 
-契约不写在本文件。写到该变更 OpenSpec 的 `design.md`：
+> **门禁 / 契约真源**在 `process/tech/api/<lang>/design.md`（或同目录契约稿）与 OpenSpec staging 重组后的正文。  
+> 禁止把 `web/*/openspec/changes/` 或 harness 根 `openspec/changes/` 当长期真源。  
+> 约定：`genex-harness-common/rules/openspec.md`、`delivery-pipeline.md` §2.3。
 
-`genex-ai-native-harness/openspec/changes/{{TASK_ID}}-<简述>/design.md`
-
-本文件只保留该链接。
+本文件可删；保留时只作导航。

@@ -59,7 +59,7 @@ echo exit:$?
 期望：
 
 - 目录项均为 `[ok]`
-- 关键文件中：`deploy.md`、两份 `design.md`、`api.md` 由模板生成，应为 `[ok]`。其中设计三份只有链接，没有设计正文。`clarify.md` / `prd.md` / `handoff.md` / `cases.md` 仍可为 `[MISSING]`
+- 关键文件中：`stack-routing.md`、`deploy.md` 由模板生成应为 `[ok]`。角色根**不再**预置 `design.md`/`api.md`（设计在 Step3 建 `<role>/<lang>/`）。`clarify.md` / `prd.md` / `handoff.md` / `cases.md` 仍可为 `[MISSING]`
 - 若仅缺正文、目录齐全：exit code ≠ 0（除非只缺已模板化的 deploy.md 外的项）
 
 ### 4. 落盘映射冒烟（写一篇假 PRD + 部署）
